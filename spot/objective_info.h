@@ -67,7 +67,7 @@ namespace spot
 		pair< size_t, size_t > import_mean_std( const path& filename, bool import_std, double std_factor = 1.0, double std_offset = 0.0 );
 		pair< size_t, size_t > import_locked( const path& filename );
 		void set_global_std( double factor, double offset );
-		void set_mean_std( const vector< par_value >& mean, const vector< par_value >& std );
+		void set_mean_std( const par_vec& mean, const par_vec& std );
 		void set_name( const string& name ) { name_ = name; }
 
 	private:

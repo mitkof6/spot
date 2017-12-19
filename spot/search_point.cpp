@@ -5,12 +5,11 @@
 
 namespace spot
 {
-	search_point::search_point( const objective_info& inf ) : info_( inf )
+	search_point::search_point( const objective_info& inf ) : info_( inf ), values_( inf.size() )
 	{
 		// init with mean values
-		values_.reserve( info_.size() );
-		for ( auto& p : info_ )
-			values_.push_back( p.mean );
+		for ( index_t i = 0; i < info_.size(); ++i )
+			values_[ i ] = info_[ i ].mean;
 		round_values();
 	}
 
@@ -108,14 +107,14 @@ namespace spot
 	{
 		const auto& info = pop.front().info();
 
-		vector< par_value > mean( info.dim() );
+		par_vec mean( info.dim() );
 		for ( auto& ind : pop )
 		{
 			for ( index_t i = 0; i < info.dim(); ++i )
 				mean[ i ] += ind[ i ] / pop.size();
 		}
 
-		vector< par_value > stds( info.dim() );
+		par_vec stds( info.dim() );
 		for ( index_t pop_idx = 0; pop_idx < pop.size(); ++pop_idx )
 		{
 			for ( index_t i = 0; i < info.dim(); ++i )

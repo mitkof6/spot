@@ -11,10 +11,11 @@
 #include <cmath>
 #include <cstring>
 #include <numeric>
+#include "xo/geometry/vec_type.h"
 
 namespace spot
 {
-	typedef std::vector< double > dbl_vec;
+	typedef xo::vec_< double > dbl_vec;
 
 	struct cmaes_random_t
 	{
@@ -1129,12 +1130,12 @@ namespace spot
 		cmaes_boundary_trans_t bounds;
 		search_point_vec bounded_pop;
 
-		vector< double > get_bounded( const vector< double >& params )
+		dbl_vec get_bounded( const dbl_vec& params )
 		{
 			xo_assert( cmaes.sp.N == params.size() );
 			if ( !bounds.lower_bounds.empty() )
 			{
-				vector< double > bounded_pars( params.size() );
+				dbl_vec bounded_pars( params.size() );
 				cmaes_boundary_trans( &bounds, params, bounded_pars );
 				return bounded_pars;
 			}
@@ -1148,7 +1149,7 @@ namespace spot
 		pimpl = new pimpl_t;
 		auto n = objective_.info().dim();
 
-		std::vector< double > mean( n ), std( n ), lb( n ), ub( n );
+		dbl_vec mean( n ), std( n ), lb( n ), ub( n );
 		for ( index_t i = 0; i < n; ++i )
 		{
 			auto& p = objective_.info()[ i ];
@@ -1201,22 +1202,22 @@ namespace spot
 		if ( objective_.info().maximize() )
 		{
 			// negate first, since c-cmaes always minimizes
-			vector< fitness_t > neg_results( results.size() );
+			vec_< fitness_t > neg_results( results.size() );
 			std::transform( results.begin(), results.end(), neg_results.begin(), [&]( const double& v ) { return -v; } );
 			cmaes_UpdateDistribution( &pimpl->cmaes, neg_results );
 		}
 		else cmaes_UpdateDistribution( &pimpl->cmaes, results );
 	}
 
-	vector< double > cma_optimizer::current_mean() const
+	par_vec cma_optimizer::current_mean() const
 	{
 		return pimpl->get_bounded( pimpl->cmaes.current_mean );
 	}
 
-	vector< double > cma_optimizer::current_std() const
+	par_vec cma_optimizer::current_std() const
 	{
 		// get from covariance matrix
-		vector< double > stds( dim() );
+		par_vec stds( dim() );
 		for ( index_t i = 0; i < dim(); ++i )
 			stds[ i ] = pimpl->cmaes.sigma * sqrt( pimpl->cmaes.C[ i ][ i ] );
 

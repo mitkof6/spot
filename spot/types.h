@@ -12,15 +12,16 @@
 
 #include "xo/utility/types.h"
 #include "xo/utility/optional.h"
+#include "xo/geometry/vec_type.h"
 
 namespace spot
 {
 	using namespace xo;
 
 	using fitness_t = double;
-	using fitness_vec_t = vector< fitness_t >;
+	using fitness_vec_t = vec_< fitness_t >;
 
 	using par_value = double;
 	using optional_par_value = optional< par_value >;
-	using par_vec = vector< par_value >;
+	using par_vec = vec_< par_value >;
 }

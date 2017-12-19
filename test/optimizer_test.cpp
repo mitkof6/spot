@@ -12,10 +12,10 @@ namespace spot
 		int dim = 10;
 		int seed = 123;
 		int lambda = 0;
-		std::vector< double > init_mean( dim, 0.0 );
-		std::vector< double > init_std( dim, 0.3 );
-		std::vector< double > lower( dim, -1e18 );
-		std::vector< double > upper( dim, -1e18 );
+		vec_< double > init_mean( dim, 0.0 );
+		vec_< double > init_std( dim, 0.3 );
+		vec_< double > lower( dim, -1e18 );
+		vec_< double > upper( dim, -1e18 );
 
 		// init c-cmaes
 		cmaes_t evo;

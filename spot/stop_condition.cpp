@@ -34,10 +34,10 @@ namespace spot
 			auto& cma = dynamic_cast< const cma_optimizer& >( opt );
 			for ( index_t i = 0; i < similarity_points.size(); ++i )
 			{
-				vector< double > std;
-				std.reserve( opt.info().dim() );
-				for ( auto& p : cma.info() ) std.push_back( p.std );
-				//auto std = cma.info().begin();
+				par_vec std( opt.info().dim() );
+				for ( index_t i = 0; i < cma.info().dim(); ++i )
+					std[ i ] = cma.info()[ i ].std;
+
 				auto point = cma.current_step_best_point().values();
 				similarities[ i ] = normalized_distance( point, similarity_points[ i ], std );
 				if ( similarities[ i ] < min_distance_ )

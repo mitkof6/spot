@@ -26,7 +26,7 @@ namespace spot
 			objective_info updated_info = opt.make_updated_objective_info();
 			search_point sp( updated_info, pop[ best_idx ].values() );
 			auto best = fitnesses[ best_idx ];
-			auto avg = xo::median( fitnesses );
+			auto avg = xo::median( fitnesses.begin(), fitnesses.end() );
 			path filename = root_ / xo::stringf( "%04d_%.3f_%.3f.par", opt.current_step(), avg, best );
 			std::ofstream str( filename.str() );
 			str << sp;

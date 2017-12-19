@@ -102,7 +102,7 @@ namespace spot
 			p.std = factor * fabs( p.mean ) + offset;
 	}
 
-	void objective_info::set_mean_std( const vector< par_value >& mean, const vector< par_value >& std )
+	void objective_info::set_mean_std( const par_vec& mean, const par_vec& std )
 	{
 		xo_assert( mean.size() == size() && std.size() == size() );
 		for ( index_t i = 0; i < size(); ++i )

@@ -83,7 +83,7 @@ namespace spot
 
 	fitness_vec_t optimizer::evaluate( const search_point_vec& pop )
 	{
-		vector< double > results( pop.size(), objective_.info().worst_fitness() );
+		fitness_vec_t results( pop.size(), objective_.info().worst_fitness() );
 		try
 		{
 			vector< std::pair< std::future< double >, index_t > > threads;
@@ -133,7 +133,7 @@ namespace spot
 			}
 
 			// update current mean, avg and best
-			current_step_median_ = median( results );
+			current_step_median_ = median( results.begin(), results.end() );
 			current_step_average_ = top_average( results, pop.size() / 2 );
 			current_step_best_ = results[ best_idx ];
 			current_step_best_point_ = pop[ best_idx ];
