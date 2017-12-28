@@ -15,7 +15,7 @@
 
 namespace spot
 {
-	typedef xo::vec_< double > dbl_vec;
+	typedef xo::dynvec< double > dbl_vec;
 
 	struct cmaes_random_t
 	{
@@ -1202,7 +1202,7 @@ namespace spot
 		if ( objective_.info().maximize() )
 		{
 			// negate first, since c-cmaes always minimizes
-			vec_< fitness_t > neg_results( results.size() );
+			dynvec< fitness_t > neg_results( results.size() );
 			std::transform( results.begin(), results.end(), neg_results.begin(), [&]( const double& v ) { return -v; } );
 			cmaes_UpdateDistribution( &pimpl->cmaes, neg_results );
 		}
